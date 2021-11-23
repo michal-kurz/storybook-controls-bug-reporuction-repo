@@ -1,56 +1,6 @@
-# Create React App example with styled-components & TypeScript
+This repo is a clone of [example CRA + TS + Mui + styled-components](https://github.com/mui-org/material-ui/tree/0ba5cc28d0d54f2cb1520e34693ab43d06af75a1/examples/create-react-app-with-styled-components-typescript) repo by Mui [with a few changes](https://github.com/michal-kurz/storybook-controls-bug-reporuction-repo/commit/f8878a3e1336f5aeccf318d125c5b3751c3dce6c) on top - pretty much just added Storybook, ts docgen and a reproduction scenario.
 
-The main difference between this and the non-typescript example is that you need to add the following path config to your tsconfig:
+Description of suspicious behaviour:
+In order for Controls to auto-generate properly for a component, the name of a variable to which the component is assigned must match the name of the file in which it is defined.
 
-```json
-"paths": {
-  "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
-}
-```
-
-and install @types/styled-components:
-
-```
-npm install --save-dev @types/styled-components
-```
-
-Alternatively, to skip this configuration, you can set `skipLibCheck: true` in your tsconfig.
-
-## How to use
-
-Download the example [or clone the repo](https://github.com/mui-org/material-ui):
-
-<!-- #default-branch-switch -->
-
-```sh
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/create-react-app-with-styled-components-typescript
-cd create-react-app-with-styled-components-typescript
-```
-
-Install it and run:
-
-```sh
-npm install
-npm start
-```
-
-## CodeSandbox
-
-<!-- #default-branch-switch -->
-
-Note that CodeSandbox is not supporting react-app-rewired, yet you can [still see the code](https://codesandbox.io/s/github/mui-org/material-ui/tree/master/examples/create-react-app-with-styled-components-typescript).
-
-The following link leverages this demo: https://mui.com/guides/interoperability/#change-the-default-styled-engine with Parcel's alias feature within the `package.json`
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/styled-components-interoperability-w9z9d)
-
-## The idea behind the example
-
-This example demonstrates how you can setup [Create React App](https://github.com/facebookincubator/create-react-app) with [styled-components](https://styled-components.com/) as a style engine for your application using TypeScript.
-
-## What's next?
-
-<!-- #default-branch-switch -->
-
-You now have a working example project.
-You can head back to the documentation, continuing browsing it from the [templates](https://mui.com/getting-started/templates/) section.
+Two components of interest - `Tooltip.tsx` and `Tooltip2.tsx` - are in this repo. Both files have exactly the same content, but only `Tooltip.tsx` gets props auto-generated. This is because the name of exported variable matches the name of the file.
